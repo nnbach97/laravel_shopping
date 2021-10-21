@@ -21,6 +21,14 @@ Route::get('/home', function () {
 
 Route::prefix('categories')->group(function () {
     Route::get(
+        '/',
+        [
+            'as' => "categories.index", // tên định dang tên link
+            'uses' => "CategoryController@index", // Sử dung controller
+        ]
+
+    );
+    Route::get(
         '/create',
         [
             'as' => "categories.create", // tên định dang tên link
