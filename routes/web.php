@@ -63,3 +63,30 @@ Route::prefix('categories')->group(function () {
         ]
     );
 });
+
+Route::prefix('menus')->group(function () {
+    Route::get('/', [
+        'as' => 'menus.index',
+        'uses' => 'MenuController@index'
+    ]);
+    Route::get('/create', [
+        'as' => 'menus.create',
+        'uses' => 'MenuController@create'
+    ]);
+    Route::post('/store', [
+        'as' => 'menus.store',
+        'uses' => 'MenuController@store'
+    ]);
+    Route::get('/edit/{id}', [
+        'as' => 'menus.edit',
+        'uses' => 'MenuController@edit'
+    ]);
+    Route::get('/delete/{id}', [
+        'as' => 'menus.delete',
+        'uses' => 'MenuController@delete'
+    ]);
+    Route::post('/update/{id}', [
+        'as' => 'menus.update',
+        'uses' => 'MenuController@update'
+    ]);
+});
