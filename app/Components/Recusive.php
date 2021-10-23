@@ -21,8 +21,8 @@ class Recusive
         } else {
           $this->htmlSelect .=  '<option value="' . $value['id'] . '">' . $text . ' ' . $value['name'] . '</option>';
         }
+        $this->checkCategoryParent($parentId, $value['id'], '--');
       }
-      $this->checkCategoryParent($parentId, $value['id'], '--');
     }
 
     return $this->htmlSelect;
