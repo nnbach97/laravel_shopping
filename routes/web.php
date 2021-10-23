@@ -26,7 +26,6 @@ Route::prefix('categories')->group(function () {
             'as' => "categories.index", // tên định dang tên link
             'uses' => "CategoryController@index", // Sử dung controller
         ]
-
     );
     Route::get(
         '/create',
@@ -34,6 +33,26 @@ Route::prefix('categories')->group(function () {
             'as' => "categories.create", // tên định dang tên link
             'uses' => "CategoryController@create", // Sử dung controller
         ]
-
+    );
+    Route::post(
+        '/store',
+        [
+            'as' => "categories.store", // tên định dang tên link
+            'uses' => "CategoryController@store", // Sử dung controller
+        ]
+    );
+    Route::get(
+        '/edit/{id}',
+        [
+            'as' => "categories.edit", // tên định dang tên link
+            'uses' => "CategoryController@edit", // Sử dung controller
+        ]
+    );
+    Route::get(
+        '/delete/{id}',
+        [
+            'as' => "categories.delete", // tên định dang tên link
+            'uses' => "CategoryController@delete", // Sử dung controller
+        ]
     );
 });

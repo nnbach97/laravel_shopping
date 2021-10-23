@@ -22,34 +22,31 @@
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">Name</th>
+                <th scope="col">Category Parent</th>
+                <th scope="col">SLug</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
+              @foreach ($listCategory as $value)
               <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                <th scope="row">{{ $value['id'] }}</th>
+                <td>{{ $value['name'] }}</td>
+                <td>{{ $value['parent_id'] }}</td>
+                <td>{{ $value['slug'] }}</td>
+                <td>
+                  <a href="{{ route('categories.edit', ['id' =>  $value['id']])}}" class="btn btn-warning">Edit</a>
+                  <a href="{{ route('categories.delete', ['id' =>  $value['id']])}}" class="btn btn-danger">Delete</a>
+                </td>
               </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
+              @endforeach
             </tbody>
           </table>
         </div>
-        <!-- /.col-md-6 -->
+        <div class="col-md-12">
+          {{ $listCategory->links() }}
+        </div>
       </div>
       <!-- /.row -->
     </div><!-- /.container-fluid -->
