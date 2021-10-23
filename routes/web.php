@@ -55,4 +55,11 @@ Route::prefix('categories')->group(function () {
             'uses' => "CategoryController@delete", // Sử dung controller
         ]
     );
+    Route::post(
+        '/update/{id}',
+        [
+            'as' => "categories.update", // tên định dang tên link
+            'uses' => "CategoryController@update", // Sử dung controller
+        ]
+    );
 });

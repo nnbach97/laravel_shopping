@@ -24,9 +24,8 @@ class CategoryController extends Controller
     // create
     public function create()
     {
-        $data = $this->category->all();
-        $recusive = new Recusive($data);
-        $htmlOption = $recusive->checkCategoryParent();
+        // get Name Category
+        $htmlOption = $this->getNameCategory(0);
         return view('categories.create', compact('htmlOption'));
     }
 
@@ -45,12 +44,19 @@ class CategoryController extends Controller
     //edit
     public function edit($id)
     {
-        $this->category->where('id', $id)->update([
+        $dbItem = $this->category->find($id);
+        $htmlOption = $this->getNameCategory($dbItem->parent_id);
+        return view('categories.edit', compact('dbItem', 'htmlOption'));
+    }
+
+    //edit
+    public function update($id, Request $request)
+    {
+        $dbItem = $this->category->find($id)->update([
             'name' => $request->name,
             'parent_id' => $request->parent_id,
             'slug' => str_slug($request->name)
         ]);
-
         return redirect()->route('categories.index');
     }
 
@@ -60,5 +66,14 @@ class CategoryController extends Controller
         $this->category->where('id', $id)->delete();
 
         return redirect()->route('categories.index');
+    }
+
+    public function getNameCategory($parentId)
+    {
+        $data = $this->category->all();
+        $recusive = new Recusive($data);
+        $htmlOption = $recusive->checkCategoryParent($parentId);
+
+        return $htmlOption;
     }
 }
