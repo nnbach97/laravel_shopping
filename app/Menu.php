@@ -9,5 +9,5 @@ class Menu extends Model
 {
     use SoftDeletes;
     //
-    protected $fillable = ['name', 'parent_id'];
+    protected $fillable = ['name', 'parent_id', 'slug'];
 }

@@ -24,6 +24,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Menu Parent</th>
+                <th scope="col">Slug</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
@@ -33,6 +34,7 @@
                 <th scope="row">{{ $value['id'] }}</th>
                 <td>{{ $value['name'] }}</td>
                 <td>{{ $value['parent_id'] }}</td>
+                <td>{{ $value['slug'] }}</td>
                 <td>
                   <a href="{{ route('menus.edit', ['id' =>  $value['id']])}}" class="btn btn-warning">Edit</a>
                   <a href="{{ route('menus.delete', ['id' =>  $value['id']])}}" class="btn btn-danger">Delete</a>
