@@ -5,20 +5,9 @@
 @endsection
 
 @section('loadCSS')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<style>
-  .procuts .select2-container .select2-selection--single {
-    height: auto;
-  }
+<link href="{{ asset('vendors/select2/select2.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('admin/products/style.css') }}" rel="stylesheet" />
 
-  .procuts .form-control {
-    padding: 0.175rem .75rem;
-  }
-
-  .procuts .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background-color: #524b4b;
-  }
-</style>
 @endsection
 
 @section('content')
@@ -47,12 +36,12 @@
 
             <div class="form-group">
               <label>Chọn ảnh đại diện</label>
-              <input type="file" class="form-control" name="feature_image_path">
+              <input type="file" class="form-control-file" name="feature_image_path">
             </div>
 
             <div class="form-group">
               <label>Chọn List ảnh</label>
-              <input type="file" class="form-control" name="image_path[]" multiple>
+              <input type="file" class="form-control-file" name="image_path[]" multiple>
             </div>
 
             <div class="form-group">
@@ -71,7 +60,7 @@
 
             <div class="form-group">
               <label>Content</label>
-              <textarea class="form-control" id="content" name="content" rows="3"></textarea>
+              <textarea name="content" class="form-control my-editor" id="content" rows="3"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
@@ -87,14 +76,8 @@
 @endsection
 
 @section('loadJS')
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-  $(document).ready(function() {
-    $('.js-category-pro').select2();
-  });
-  $(".tags_select_choose").select2({
-    tags: true,
-    tokenSeparators: [',', ' ']
-  });
-</script>
+<script src="{{ asset('vendors/select2/select2.min.js') }}" defer></script>
+<script src="{{ asset('vendors/file-manager/tinymce.min.js') }}"></script>
+<script src="{{ asset('admin/products/script.js') }}" defer></script>
+
 @endsection
