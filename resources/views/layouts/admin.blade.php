@@ -17,6 +17,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{{ asset('/AdminLTE/dist/css/adminlte.min.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  @yield('loadCSS')
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -39,6 +40,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="{{ asset('/AdminLTE/plugins/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('/AdminLTE/dist/js/adminlte.min.js') }}"></script>
+  @yield('loadJS')
 </body>
 
 </html>
