@@ -17,14 +17,14 @@ class MenuController extends Controller
     public function index()
     {
         $listMenu = $this->menu->latest()->paginate(5);
-        return view('menus.index', compact('listMenu'));
+        return view('admin.menus.index', compact('listMenu'));
     }
 
     // create
     public function create()
     {
         $htmlOption = $this->getNameMenu('');
-        return view('menus.create', compact('htmlOption'));
+        return view('admin.menus.create', compact('htmlOption'));
     }
 
     // Store
@@ -44,7 +44,7 @@ class MenuController extends Controller
     {
         $dbItem = $this->menu->find($id);
         $htmlOption = $this->getNameMenu($dbItem->parent_id);
-        return view('menus.edit', compact(['dbItem', 'htmlOption']));
+        return view('admin.menus.edit', compact(['dbItem', 'htmlOption']));
     }
 
     // update

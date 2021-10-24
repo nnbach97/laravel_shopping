@@ -18,7 +18,7 @@ class CategoryController extends Controller
     public function index()
     {
         $listCategory = $this->category->latest()->paginate(5); // lấy ra các bản ghi mới nhất latest
-        return view('categories.index', compact('listCategory'));
+        return view('admin.categories.index', compact('listCategory'));
     }
 
     // create
@@ -26,7 +26,7 @@ class CategoryController extends Controller
     {
         // get Name Category
         $htmlOption = $this->getNameCategory(0);
-        return view('categories.create', compact('htmlOption'));
+        return view('admin.categories.create', compact('htmlOption'));
     }
 
     //store
@@ -46,7 +46,7 @@ class CategoryController extends Controller
     {
         $dbItem = $this->category->find($id);
         $htmlOption = $this->getNameCategory($dbItem->parent_id);
-        return view('categories.edit', compact('dbItem', 'htmlOption'));
+        return view('admin.categories.edit', compact('dbItem', 'htmlOption'));
     }
 
     //edit
