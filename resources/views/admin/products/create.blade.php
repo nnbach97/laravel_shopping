@@ -6,7 +6,7 @@
 
 @section('loadCSS')
 <link href="{{ asset('vendors/select2/select2.min.css') }}" rel="stylesheet" />
-<link href="{{ asset('admin/products/style.css') }}" rel="stylesheet" />
+<link href="{{ asset('admins/products/style.css') }}" rel="stylesheet" />
 
 @endsection
 
@@ -78,6 +78,6 @@
 @section('loadJS')
 <script src="{{ asset('vendors/select2/select2.min.js') }}" defer></script>
 <script src="{{ asset('vendors/file-manager/tinymce.min.js') }}"></script>
-<script src="{{ asset('admin/products/script.js') }}" defer></script>
+<script src="{{ asset('admins/products/script.js') }}" defer></script>
 
 @endsection
