@@ -28,9 +28,17 @@ class AdminProductController extends Controller
     }
 
     // store
-    public function store()
+    public function store(Request $request)
     {
-        dd('store');
+        // $path = $request->file('feature_image_path')->store('products'); // Auto đặt name img
+
+        // Thưc hiện giữ nguyên ảnh ban đầu
+        $fileName = $request->feature_image_path->getClientOriginalName(); // Get name img gốc
+        $path = $request->file('feature_image_path')->storeAs(
+            'public/products',
+            $fileName
+        );
+        return $path;
     }
 
     // edit
