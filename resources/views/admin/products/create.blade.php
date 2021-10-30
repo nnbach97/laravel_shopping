@@ -36,7 +36,7 @@
 
             <div class="form-group">
               <label>Chọn ảnh đại diện</label>
-              <input type="file" class="form-control-file" name="feature_image_path">
+              <input type="file" class="form-control-file" name="feature_image">
             </div>
 
             <div class="form-group">
