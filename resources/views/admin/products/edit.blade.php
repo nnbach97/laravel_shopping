@@ -13,7 +13,7 @@
 @section('content')
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
-  @include('partial.content-header', ['name'=> 'Product', 'key'=> 'Add'])
+  @include('partial.content-header', ['name'=> 'Product', 'key'=> 'Edit'])
 
   <!-- /.content-header -->
 
@@ -22,7 +22,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-6">
-          <form action="{{ route('products.store') }}" method="post" enctype="multipart/form-data">
+          <form action="{{ route('products.update') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
               <label>Tên Product</label>
