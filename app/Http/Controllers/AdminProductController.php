@@ -6,6 +6,7 @@ use App\Category;
 use App\Components\Recusive;
 use App\Product;
 use App\Product_image;
+use App\Tag;
 use App\Traits\StorageImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -80,6 +81,14 @@ class AdminProductController extends Controller
             }
         }
 
+        // Inrset Product_tags
+        if ($request->tags) {
+            foreach ($request->tags as $itemTag) {
+                $dataTag = Tag::firstOrCreate(['name' => $itemTag]);
+                $tagId[] = $dataTag->id;
+            }
+            $product->tags()->attach($tagId);
+        }
 
 
         return redirect()->route('products.index');
