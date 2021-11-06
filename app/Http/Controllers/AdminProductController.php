@@ -64,13 +64,23 @@ class AdminProductController extends Controller
         if ($request->hasFile('image_path')) {
             foreach ($request->image_path as $itemImage) {
                 $dataUploadFileImage = $this->storageTraitUploadMulti($itemImage, 'products');
-                $this->product_image->create([
+                // c1: sử dụng đến product_images
+                // $this->product_image->create([
+                //     'product_id' => $product->id,
+                //     'image_path' => $dataUploadFileImage['image_path'],
+                //     'image_name' => $dataUploadFileImage['image_name'],
+                // ]);
+
+                // c2: sử dung eloquent tao liên kêt Product với Product_images
+                $product->images()->create([
                     'product_id' => $product->id,
                     'image_path' => $dataUploadFileImage['image_path'],
                     'image_name' => $dataUploadFileImage['image_name'],
                 ]);
             }
         }
+
+
 
         return redirect()->route('products.index');
     }
