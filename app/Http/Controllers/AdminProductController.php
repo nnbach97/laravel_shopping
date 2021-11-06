@@ -90,7 +90,6 @@ class AdminProductController extends Controller
             $product->tags()->attach($tagId);
         }
 
-
         return redirect()->route('products.index');
     }
 
