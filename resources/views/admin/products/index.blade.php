@@ -26,8 +26,7 @@
                 <th scope="col">Name</th>
                 <th scope="col">Price</th>
                 <th scope="col">Content</th>
-                <th scope="col">user_id</th>
-                <th scope="col">category_id</th>
+                <th scope="col">Category</th>
                 <th scope="col">slug</th>
                 <th scope="col">Action</th>
               </tr>
@@ -38,10 +37,9 @@
                 <th scope="row">{{ $value['id'] }}</th>
                 <td><img src="{{ $value['feature_image_path'] }}" alt="{{ $value['name'] }}" style="max-width: 100px; height: auto"></td>
                 <td>{{ $value['name'] }}</td>
-                <td>{{ $value['price'] }}</td>
+                <td>{{ number_format($value['price']) }} đ</td>
                 <td>{!! $value['content'] !!}</td>
-                <td>{{ $value['user_id'] }}</td>
-                <td>{{ $value['category_id'] }}</td>
+                <td>{{ isset($value->categories->name) ? $value->categories->name : '' }}</td>
                 <td>{{ $value['slug'] }}</td>
                 <td>
                   <a href="{{ route('products.edit', ['id' =>  $value['id']])}}" class="btn btn-warning">Edit</a>

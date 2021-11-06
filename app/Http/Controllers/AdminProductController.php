@@ -86,7 +86,7 @@ class AdminProductController extends Controller
             }
 
             // Inrset Product_tags
-            if ($request->tags) {
+            if (!empty($request->tags)) {
                 foreach ($request->tags as $itemTag) {
                     $dataTag = Tag::firstOrCreate(['name' => $itemTag]);
                     $tagId[] = $dataTag->id;

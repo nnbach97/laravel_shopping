@@ -19,7 +19,6 @@ class Product extends Model
         return $this->hasMany(Product_image::class, 'product_id');
     }
 
-
     /**
      * n-n
      * Tao lien ket vs Tags
@@ -28,5 +27,25 @@ class Product extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'product_tags', 'product_id', 'tag_id');
+    }
+
+    /**
+     * 1-n
+     * Tao lien ket vs categories
+     * 
+     */
+    public function categories()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
+    }
+
+    /**
+     * 1-n
+     * Tao lien ket vs categories
+     * 
+     */
+    public function users()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
