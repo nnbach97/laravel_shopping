@@ -105,6 +105,13 @@ class AdminProductController extends Controller
     // edit
     public function edit($id)
     {
+        $product = $this->product->find($id);
+        $htmlOption = $this->getCategoryProduct($product->category_id);
+        return view('admin.products.edit', compact('htmlOption', 'product'));
+    }
+
+    public function update()
+    {
         return redirect()->route('products.index');
     }
 

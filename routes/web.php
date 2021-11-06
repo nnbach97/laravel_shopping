@@ -112,5 +112,9 @@ Route::prefix('admin')->group(function () {
             'as' => 'products.store',
             'uses' => 'AdminProductController@store'
         ]);
+        Route::post('/update', [
+            'as' => 'products.update',
+            'uses' => 'AdminProductController@update'
+        ]);
     });
 });

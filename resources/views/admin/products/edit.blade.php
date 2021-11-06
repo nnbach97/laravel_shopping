@@ -26,43 +26,57 @@
             @csrf
             <div class="form-group">
               <label>Tên Product</label>
-              <input type="text" class="form-control" placeholder="Nhập Tên Product" name="name" value="{{  }}">
+              <input type="text" class="form-control" placeholder="Nhập Tên Product" name="name" value="{{ $product->name }}">
             </div>
 
             <div class="form-group">
               <label>Price</label>
-              <input type="number" min="0" class="form-control" placeholder="Nhập Tên price" name="price">
+              <input type="number" min="0" class="form-control" placeholder="Nhập Tên price" name="price" value="{{ $product->price }}">
             </div>
 
             <div class="form-group">
               <label>Chọn ảnh đại diện</label>
               <input type="file" class="form-control-file" name="feature_image_path">
-            </div>
+              <div class="col-md-4 feature_image_container">
+                <div class="row">
+                  <img class="feature_image" src="{{ $product->feature_image_path }}" alt="{{ $product->name }}" style="max-width: 350px; padding: 10px;">
+                </div>
+              </div>
 
-            <div class="form-group">
-              <label>Chọn List ảnh</label>
-              <input type="file" class="form-control-file" name="image_path[]" multiple>
-            </div>
+              <div class="form-group">
+                <label>Chọn List ảnh</label>
+                <input type="file" class="form-control-file" name="image_path[]" multiple>
+                <div class="col-md-12 feature_image_container">
+                  <div class="row d-flex">
+                    @foreach($product->images as $productImage)
+                    <img class="feature_image" src="{{ $productImage->image_path }}" alt="{{ $productImage->image_name }}" style="max-width: 220px; padding: 10px;">
+                    @endforeach
+                  </div>
+                </div>
+              </div>
 
-            <div class="form-group">
-              <label>Lựa chọn category</label>
-              <select class="js-category-pro form-control" name="category_id">
-                <option value="0">---Lựa chọn---</option>
-                {!! $htmlOption !!}
-              </select>
-            </div>
+              <div class="form-group">
+                <label>Lựa chọn category</label>
+                <select class="js-category-pro form-control" name="category_id">
+                  <option value="0">---Lựa chọn---</option>
+                  {!! $htmlOption !!}
+                </select>
+              </div>
 
-            <div class="form-group">
-              <label>Tags</label>
-              <select class="form-control tags_select_choose" multiple="multiple">
-              </select>
-            </div>
+              <div class="form-group">
+                <label>Tags</label>
+                <select class="form-control tags_select_choose" multiple="multiple" value="{{ $product->tag }}">
+                  @foreach($product->tags as $tag)
+                  <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
+                  @endforeach
+                </select>
+              </div>
 
-            <div class="form-group">
-              <label>Content</label>
-              <textarea name="contents" class="form-control my-editor" id="content" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+              <div class="form-group">
+                <label>Content</label>
+                <textarea name="contents" class="form-control my-editor" id="content" rows="3">{{ $product->content }}</textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
           </form>
         </div>
         <!-- /.col-md-6 -->
