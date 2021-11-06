@@ -9,6 +9,8 @@ use App\Product_image;
 use App\Tag;
 use App\Traits\StorageImageTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class AdminProductController extends Controller
@@ -40,57 +42,64 @@ class AdminProductController extends Controller
     // store
     public function store(Request $request)
     {
-        // data truyen vao
-        $productItem = [
-            'name' => $request->name,
-            'price' => $request->price,
-            'content' => $request->contents,
-            'category_id' => $request->category_id,
-            'user_id' => auth()->id(),
-            'slug' => str_slug($request->name)
-        ];
+        try {
+            DB::beginTransaction();
+            // data truyen vao
+            $productItem = [
+                'name' => $request->name,
+                'price' => $request->price,
+                'content' => $request->contents,
+                'category_id' => $request->category_id,
+                'user_id' => auth()->id(),
+                'slug' => str_slug($request->name)
+            ];
 
-        // $path = $request->file('feature_image_path')->store('products'); // Auto đặt name img
-        // Thưc hiện giữ nguyên ảnh ban đầu
-        $dataUploadFile = $this->storageTraitUpload($request, 'feature_image_path', 'products');
-        if (!empty($dataUploadFile)) {
-            $productItem['feature_image_name'] = $dataUploadFile['file_name'];
-            $productItem['feature_image_path'] = $dataUploadFile['file_path'];
-        }
-
-        $product = $this->product->create($productItem);
-
-        //inrset product_images
-        // check xem cái input name image_path
-        if ($request->hasFile('image_path')) {
-            foreach ($request->image_path as $itemImage) {
-                $dataUploadFileImage = $this->storageTraitUploadMulti($itemImage, 'products');
-                // c1: sử dụng đến product_images
-                // $this->product_image->create([
-                //     'product_id' => $product->id,
-                //     'image_path' => $dataUploadFileImage['image_path'],
-                //     'image_name' => $dataUploadFileImage['image_name'],
-                // ]);
-
-                // c2: sử dung eloquent tao liên kêt Product với Product_images
-                $product->images()->create([
-                    'product_id' => $product->id,
-                    'image_path' => $dataUploadFileImage['image_path'],
-                    'image_name' => $dataUploadFileImage['image_name'],
-                ]);
+            // $path = $request->file('feature_image_path')->store('products'); // Auto đặt name img
+            // Thưc hiện giữ nguyên ảnh ban đầu
+            $dataUploadFile = $this->storageTraitUpload($request, 'feature_image_path', 'products');
+            if (!empty($dataUploadFile)) {
+                $productItem['feature_image_name'] = $dataUploadFile['file_name'];
+                $productItem['feature_image_path'] = $dataUploadFile['file_path'];
             }
-        }
 
-        // Inrset Product_tags
-        if ($request->tags) {
-            foreach ($request->tags as $itemTag) {
-                $dataTag = Tag::firstOrCreate(['name' => $itemTag]);
-                $tagId[] = $dataTag->id;
+            $product = $this->product->create($productItem);
+
+            //inrset product_images
+            // check xem cái input name image_path
+            if ($request->hasFile('image_path')) {
+                foreach ($request->image_path as $itemImage) {
+                    $dataUploadFileImage = $this->storageTraitUploadMulti($itemImage, 'products');
+                    // c1: sử dụng đến product_images
+                    // $this->product_image->create([
+                    //     'product_id' => $product->id,
+                    //     'image_path' => $dataUploadFileImage['image_path'],
+                    //     'image_name' => $dataUploadFileImage['image_name'],
+                    // ]);
+
+                    // c2: sử dung eloquent tao liên kêt Product với Product_images
+                    $product->images()->create([
+                        'product_id' => $product->id,
+                        'image_path' => $dataUploadFileImage['image_path'],
+                        'image_name' => $dataUploadFileImage['image_name'],
+                    ]);
+                }
             }
-            $product->tags()->attach($tagId);
-        }
 
-        return redirect()->route('products.index');
+            // Inrset Product_tags
+            if ($request->tags) {
+                foreach ($request->tags as $itemTag) {
+                    $dataTag = Tag::firstOrCreate(['name' => $itemTag]);
+                    $tagId[] = $dataTag->id;
+                }
+                $product->tags()->attach($tagId);
+            }
+
+            DB::commit();
+            return redirect()->route('products.index');
+        } catch (\Exception $error) {
+            Log::error('Message: ' . $error->getMessage() . '--- Line: ' . $error->getLine());
+            DB::rollBack();
+        }
     }
 
     // edit
