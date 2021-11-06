@@ -27,4 +27,21 @@ trait StorageImageTrait
     ];
     return $dataUpload;
   }
+
+  // Xu ly nhieu anh
+  public function storageTraitUploadMulti($file, $forderName)
+  {
+    $fileNameOrigin = $file->getClientOriginalName(); // Get name img gốc
+    $fileNameHash = str_random(20) . '.' . $file->getClientOriginalExtension();
+    $path = $file->storeAs(
+      'public/' . $forderName . '/' . auth()->user()->id,
+      $fileNameHash
+    );
+
+    $dataUpload = [
+      'image_name' => $fileNameOrigin,
+      'image_path' => Storage::url($path)
+    ];
+    return $dataUpload;
+  }
 }

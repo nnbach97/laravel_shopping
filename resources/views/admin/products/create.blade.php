@@ -54,7 +54,7 @@
 
             <div class="form-group">
               <label>Tags</label>
-              <select class="form-control tags_select_choose" multiple="multiple">
+              <select class="form-control tags_select_choose" multiple="multiple" name="tags[]">
               </select>
             </div>
 

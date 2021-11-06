@@ -26,7 +26,7 @@
             @csrf
             <div class="form-group">
               <label>Tên Product</label>
-              <input type="text" class="form-control" placeholder="Nhập Tên Product" name="name">
+              <input type="text" class="form-control" placeholder="Nhập Tên Product" name="name" value="{{  }}">
             </div>
 
             <div class="form-group">
