@@ -112,7 +112,7 @@ Route::prefix('admin')->group(function () {
             'as' => 'products.store',
             'uses' => 'AdminProductController@store'
         ]);
-        Route::post('/update', [
+        Route::post('/update/{id}', [
             'as' => 'products.update',
             'uses' => 'AdminProductController@update'
         ]);

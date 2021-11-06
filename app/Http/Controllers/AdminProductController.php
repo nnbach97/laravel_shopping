@@ -110,9 +110,61 @@ class AdminProductController extends Controller
         return view('admin.products.edit', compact('htmlOption', 'product'));
     }
 
-    public function update()
+    public function update(Request $request, $id)
     {
-        return redirect()->route('products.index');
+        try {
+            DB::beginTransaction();
+            // data truyen vao
+            $productItemUpdate = [
+                'name' => $request->name,
+                'price' => $request->price,
+                'content' => $request->contents,
+                'category_id' => $request->category_id,
+                'user_id' => auth()->id(),
+                'slug' => str_slug($request->name)
+            ];
+
+            // update img đại diện
+            $dataImageUpdateTrait = $this->storageTraitUpload($request, 'feature_image_path', 'products');
+            if (!empty($dataImageUpdateTrait)) {
+                $productItemUpdate['feature_image_path'] = $dataImageUpdateTrait['file_path'];
+                $productItemUpdate['feature_image_name'] = $dataImageUpdateTrait['file_name'];
+            }
+
+            $this->product->find($id)->update($productItemUpdate);
+            $product = $this->product->find($id);
+
+            // update Product_images
+            if ($request->hasFile('image_path')) {
+                // Xóa hết ảnh đi 
+                $this->product_image->where('product_id', $id)->delete();
+                foreach ($request->image_path as $itemImages) {
+                    $dataImageUpdateMulti = $this->storageTraitUploadMulti($itemImages, 'products');
+
+                    $product->images()->create([
+                        'image_path' => $dataImageUpdateMulti['image_path'],
+                        'image_name' => $dataImageUpdateMulti['image_name'],
+                    ]);
+                }
+            }
+
+            // Inrset Product_tags
+            if (!empty($request->tags)) {
+                // $product->tags()->detach();
+
+                foreach ($request->tags as $itemTag) {
+                    $dataTag = Tag::firstOrCreate(['name' => $itemTag]);
+                    $tagId[] = $dataTag->id;
+                }
+                $product->tags()->sync($tagId);
+            }
+
+            DB::commit();
+            return redirect()->route('products.index');
+        } catch (\Exception $error) {
+            Log::error('Message: ' . $error->getMessage() . '--- Line: ' . $error->getLine());
+            DB::rollBack();
+        }
     }
 
     // delete

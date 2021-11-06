@@ -22,7 +22,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-6">
-          <form action="{{ route('products.update') }}" method="post" enctype="multipart/form-data">
+          <form action="{{ route('products.update', ['id' => $product->id]) }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
               <label>Tên Product</label>
@@ -65,9 +65,9 @@
 
               <div class="form-group">
                 <label>Tags</label>
-                <select class="form-control tags_select_choose" multiple="multiple" value="{{ $product->tag }}">
+                <select class="form-control tags_select_choose" multiple="multiple" value="{{ $product->tag }}" name="tags[]">
                   @foreach($product->tags as $tag)
-                  <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
+                  <option value="{{ $tag->name }}" selected>{{ $tag->name }}</option>
                   @endforeach
                 </select>
               </div>
