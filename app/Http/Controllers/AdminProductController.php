@@ -170,8 +170,20 @@ class AdminProductController extends Controller
     // delete
     public function delete($id)
     {
-        $this->product->find($id)->delete();
-        return redirect()->route('products.index');
+        try {
+            $this->product->find($id)->delete();
+            return response()->json([
+                'code' => 200,
+                'message' => 'Success'
+            ], 200);
+            // return redirect()->route('products.index');
+        } catch (\Exception $error) {
+            Log::error('Message: ' . $error->getMessage() . '--- Line: ' . $error->getLine());
+            return response()->json([
+                'code' => 500,
+                'message' => 'Fail'
+            ], 500);
+        }
     }
 
     // Get Category Product

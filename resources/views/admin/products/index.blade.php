@@ -43,7 +43,7 @@
                 <td>{{ $value['slug'] }}</td>
                 <td>
                   <a href="{{ route('products.edit', ['id' =>  $value['id']])}}" class="btn btn-warning">Edit</a>
-                  <a href="{{ route('products.delete', ['id' =>  $value['id']])}}" class="btn btn-danger">Delete</a>
+                  <a href="javascript:void(0)" data-url="{{ route('products.delete', ['id' =>  $value['id']])}}" class="btn btn-danger action_btn_delete">Delete</a>
                 </td>
               </tr>
               @endforeach
@@ -60,4 +60,9 @@
   <!-- /.content -->
 </div>
 
+@endsection
+
+@section('loadJS')
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('admins/products/list.js') }}"></script>
 @endsection
